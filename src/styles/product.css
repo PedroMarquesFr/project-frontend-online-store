@@ -47,8 +47,9 @@ img[alt="thumb-product"]{
 }
 
 button[data-testid="product-add-to-cart"]{
-    border: 0.13rem solid #454637;
+    border: 0.1rem solid #454637;
     color: #454637;
+    font-weight: 4ss00;
     padding: 6px 16px;
     border-radius: 50px;
     position: absolute;

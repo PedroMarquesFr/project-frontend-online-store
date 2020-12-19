@@ -55,3 +55,8 @@ div[data-testid='product'] {
   grid-template-columns: minmax(200px, 1fr) 4fr;
   margin: 5px 10vw;
 }
+
+input{
+  padding: 5px;
+  border: 1px solid #272607;
+}
