@@ -2,25 +2,23 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { BiCart } from 'react-icons/bi';
 import PropTypes from 'prop-types';
-import * as api from '../services/api';
+
+import { connect } from 'react-redux';
+
 import Rating from '../components/Rating';
 import DetailsForm from '../components/DetailsForm';
 import addToCart from '../services/addToCart';
 import updateCartTotalinLocalStorage from '../services/updateCartTotal';
 
-
 class Details extends Component {
   constructor() {
     super();
     this.state = {
-      loading: true,
-      product: [],
       name: '',
       rate: '',
       evaluation: '',
       ratings: [],
     };
-    this.fetchAPI = this.fetchAPI.bind(this);
     this.handleState = this.handleState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.filterEvaluations = this.filterEvaluations.bind(this);
@@ -29,7 +27,6 @@ class Details extends Component {
   }
 
   componentDidMount() {
-    this.fetchAPI();
     if (localStorage.getItem('evaluations') === null) {
       localStorage.setItem(
         'evaluations',
@@ -63,17 +60,6 @@ class Details extends Component {
     this.setState({ total });
   }
 
-  async fetchAPI() {
-    const { match } = this.props;
-    const { params } = match;
-    const { category, searchKey, id } = params;
-    const resp = await api.getProductsFromCategoryAndQuery(category, searchKey);
-    this.setState({
-      loading: false,
-      product: resp.results.find((product) => product.id === id),
-    });
-  }
-
   handleState(e) {
     const { name, value } = e.target;
     this.setState({
@@ -96,7 +82,12 @@ class Details extends Component {
   }
 
   render() {
-    const { loading, product, ratings, total } = this.state;
+    const { ratings, total } = this.state;
+    const { match } = this.props;
+    const { params } = match;
+    const { id } = params;
+    const { products } = this.props;
+    const product = products.find((product) => product.id === id);
     const isEmpty = 0;
     return (
       <div>
@@ -104,34 +95,38 @@ class Details extends Component {
           <BiCart className="icon-cart" />
           {total !== isEmpty && <div data-testid="shopping-cart-size">{total}</div>}
         </Link>
-        {
-          !loading && (
-            <div>
-              <h2 data-testid="product-detail-name">{product.title}</h2>
-              <img src={ product.thumbnail } alt="thumb" />
-              <p>{product.price}</p>
-              <button
-                type="button"
-                data-testid="product-detail-add-to-cart"
-                onClick={ this.addToCart }
-              >
-                Adicionar ao carrinho
-              </button>
-              <div className="evaluation">
-                <DetailsForm
-                  handleState={ this.handleState }
-                  handleSubmit={ this.handleSubmit }
-                />
-                <section>
-                  <Rating ratings={ ratings } />
-                </section>
-              </div>
-            </div>)
-        }
+        <div>
+          <h2 data-testid="product-detail-name">{product.title}</h2>
+          <img src={product.thumbnail} alt="thumb" />
+          <p>{product.price}</p>
+          <button
+            type="button"
+            data-testid="product-detail-add-to-cart"
+            onClick={this.addToCart}
+          >
+            Adicionar ao carrinho
+          </button>
+          <div className="evaluation">
+            <DetailsForm
+              handleState={this.handleState}
+              handleSubmit={this.handleSubmit}
+            />
+            <section>
+              <Rating ratings={ratings} />
+            </section>
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ APIRequest: { products, error } }) => ({
+  products,
+  error,
+});
+
+export default connect(mapStateToProps)(Details);
 
 Details.propTypes = {
   match: PropTypes.shape({
@@ -142,5 +137,3 @@ Details.propTypes = {
     }),
   }).isRequired,
 };
-
-export default Details;
