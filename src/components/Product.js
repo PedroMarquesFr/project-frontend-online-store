@@ -27,12 +27,12 @@ class Product extends Component {
   }
 
   render() {
-    const { title, thumbnail, price, id, category, searchKey, freeShipping } = this.props;
+    const { title, thumbnail, price, id, freeShipping } = this.props;
     return (
       <div data-testid="product">
         <Link
           data-testid="product-detail-link"
-          to={ `./details/${category || null}/${searchKey || null}/${id}` }
+          to={ `./details/${id}` }
         >
           {freeShipping ? (
             <p className="p-free-shipping">
