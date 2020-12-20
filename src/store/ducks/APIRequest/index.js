@@ -1,17 +1,17 @@
-import { REQUESTING_DATA, RECEIVED_DATA, FAILED_REQUEST } from './types';
+import { TasksTypes } from './types';
 const initialState = {
   isFetching: false,
-  charObj: false,
+  products: [],
   error: '',
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case REQUESTING_DATA:
+    case TasksTypes.REQUESTING_DATA:
       return { ...state, isFetching: true };
-    case RECEIVED_DATA:
-      return { ...state, charObj: action.resp[0], isFetching: false };
-    case FAILED_REQUEST:
+    case TasksTypes.RECEIVED_DATA:
+      return { ...state, products: action.resp, isFetching: false };
+    case TasksTypes.FAILED_REQUEST:
       return { ...state, error: action.resp, isFetching: false };
     default:
       return state;

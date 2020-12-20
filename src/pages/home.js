@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+
+import {connect} from 'react-redux';
+import handleAsync from '../store/ducks/APIRequest/actions';
+
 import { Link } from 'react-router-dom';
 import { BiCart, BiSearch, BiShoppingBag } from 'react-icons/bi';
-import * as api from '../services/api';
 import updateCartTotalinLocalStorage from '../services/updateCartTotal';
 
 import Categories from '../components/Categories';
@@ -19,7 +22,6 @@ class Home extends Component {
     this.state = {
       searchKey: '',
       category: '',
-      results: [],
       total: 0,
     };
   }
@@ -36,11 +38,12 @@ class Home extends Component {
 
   async fetchAPI() {
     const { searchKey, category } = this.state;
-    const request = await api.getProductsFromCategoryAndQuery(category, searchKey);
+    const {handleAsync} = this.props;
+    handleAsync(category, searchKey);
 
-    this.setState({
-      results: request.results,
-    });
+    // this.setState({
+    //   results: request.results,
+    // });
   }
 
   async handleCategory(category) {
@@ -58,7 +61,7 @@ class Home extends Component {
   }
 
   render() {
-    const { results, category, searchKey, total } = this.state;
+    const { category, searchKey, total } = this.state;
     const isEmpty = 0;
     return (
       <div>
@@ -88,7 +91,6 @@ class Home extends Component {
         <div className="div-body">
           <Categories filterCategory={ this.handleCategory } />
           <ProductList
-            results={ results }
             category={ category }
             searchKey={ searchKey }
             updateCartTotal={ this.updateCartTotal }
@@ -102,4 +104,6 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapDispatchToProps = { handleAsync };
+
+export default connect(null, mapDispatchToProps)(Home);

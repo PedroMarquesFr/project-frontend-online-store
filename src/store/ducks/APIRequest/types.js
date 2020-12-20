@@ -1,4 +1,4 @@
-export default {
+export const TasksTypes = {
   REQUESTING_DATA: 'REQUESTING_DATA',
   RECEIVED_DATA: 'RECEIVED_DATA',
   FAILED_REQUEST: 'FAILED_REQUEST',
