@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import {editProduct, removeProduct} from '../store/ducks/CartItems/actions';
+
 class CartItem extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +37,7 @@ class CartItem extends Component {
   }
 
   render() {
-    const { title, thumbnail, price, id, quantity, availableQuantity } = this.props;
+    const { title, thumbnail, price, id, quantity, availableQuantity, editProduct, removeProduct } = this.props;
     return (
       <div key={ id }>
         <h2 data-testid="shopping-cart-product-name">{title}</h2>
@@ -49,7 +52,7 @@ class CartItem extends Component {
           disabled={ quantity <= 1 }
           type="button"
           data-testid="product-decrease-quantity"
-          onClick={ this.decreaseQuantity }
+          onClick={ ()=>editProduct(id,false) }
         >
           -
         </button>
@@ -57,14 +60,14 @@ class CartItem extends Component {
           disabled={ quantity >= availableQuantity }
           type="button"
           data-testid="product-increase-quantity"
-          onClick={ this.increaseQuantity }
+          onClick={ ()=>editProduct(id,true) }
         >
           +
         </button>
         <button
           type="button"
           data-testid="product-remove"
-          onClick={ this.removeItem }
+          onClick={ ()=>removeProduct(id) }
         >
           ×
         </button>
@@ -72,6 +75,10 @@ class CartItem extends Component {
     );
   }
 }
+
+const mapDispatchToProps = { editProduct, removeProduct };
+
+export default connect(null, mapDispatchToProps)(CartItem);
 
 CartItem.propTypes = {
   title: PropTypes.string.isRequired,
@@ -84,4 +91,3 @@ CartItem.propTypes = {
   removeItem: PropTypes.func.isRequired,
 };
 
-export default CartItem;

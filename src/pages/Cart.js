@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import { connect } from 'react-redux';
+
 import { Redirect } from 'react-router-dom';
 import CartItem from '../components/CartItem';
 import '../styles/home.css';
@@ -7,7 +10,7 @@ import updateCartItemInLocalStorage from '../services/updateCartItem';
 import removeCartItemInLocalStorage from '../services/removeCartItem';
 
 
-export default class Cart extends Component {
+class Cart extends Component {
   constructor(props) {
     super(props);
 
@@ -83,7 +86,8 @@ export default class Cart extends Component {
   }
 
   render() {
-    const { loading, cartItems, isEmpty } = this.state;
+    const { loading, isEmpty } = this.state;
+    const {cartItems} = this.props;
     if (loading) {
       return (
         <div>
@@ -132,3 +136,9 @@ export default class Cart extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ CartItems: { cart } }) => ({
+  cartItems: cart,
+});
+
+export default connect(mapStateToProps)(Cart);
