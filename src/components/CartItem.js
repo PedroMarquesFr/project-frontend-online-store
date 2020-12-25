@@ -5,36 +5,6 @@ import { connect } from 'react-redux';
 import {editProduct, removeProduct} from '../store/ducks/CartItems/actions';
 
 class CartItem extends Component {
-  constructor(props) {
-    super(props);
-    this.increaseQuantity = this.increaseQuantity.bind(this);
-    this.decreaseQuantity = this.decreaseQuantity.bind(this);
-    this.removeItem = this.removeItem.bind(this);
-  }
-
-  increaseQuantity() {
-    const { updateQuantity, id } = this.props;
-    let { quantity } = this.props;
-    quantity += 1;
-    updateQuantity({ id, quantity });
-  }
-
-  decreaseQuantity() {
-    const { updateQuantity, id } = this.props;
-    let { quantity } = this.props;
-    if (quantity > 1) {
-      quantity -= 1;
-      updateQuantity({ id, quantity });
-    } else {
-      quantity = 1;
-      updateQuantity({ id, quantity });
-    }
-  }
-
-  removeItem() {
-    const { removeItem, id } = this.props;
-    removeItem(id);
-  }
 
   render() {
     const { title, thumbnail, price, id, quantity, availableQuantity, editProduct, removeProduct } = this.props;
@@ -87,7 +57,5 @@ CartItem.propTypes = {
   quantity: PropTypes.number.isRequired,
   availableQuantity: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
-  updateQuantity: PropTypes.func.isRequired,
-  removeItem: PropTypes.func.isRequired,
 };
 
