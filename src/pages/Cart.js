@@ -88,6 +88,7 @@ class Cart extends Component {
   render() {
     const { loading, isEmpty } = this.state;
     const {cartItems} = this.props;
+    console.log(cartItems)
     if (loading) {
       return (
         <div>
@@ -96,13 +97,6 @@ class Cart extends Component {
       );
     }
 
-    if (isEmpty) {
-      return (
-        <div>
-          <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
-        </div>
-      );
-    }
 
     const { redirect } = this.state;
     return (
