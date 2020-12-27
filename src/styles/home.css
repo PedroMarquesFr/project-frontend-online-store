@@ -56,3 +56,14 @@ button[data-testid='query-button'] {
 .h2-title{
     color:#e6ea23 ;
 }
+
+.defaultButton{
+  padding:10px;
+  font-size: 17px;
+  background-color: #375ee8;
+  color:white;
+
+}
+.defaultButton:disabled{
+  background-color: #464646;
+}

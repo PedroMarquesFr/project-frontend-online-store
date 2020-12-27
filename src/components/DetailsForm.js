@@ -38,7 +38,7 @@ export default class DetailsForm extends Component {
             />
           </label>
         </form>
-        <button type="button" onClick={ handleSubmit }>
+        <button type="button" onClick={ handleSubmit } className="defaultButton">
           Submit
         </button>
       </div>

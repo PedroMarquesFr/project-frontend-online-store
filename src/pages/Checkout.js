@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+
+import { connect } from 'react-redux';
+
 import { Redirect } from 'react-router-dom';
 import CheckoutForm from '../components/CheckoutForm';
+import '../styles/checklist.css';
 
-export default class Checkout extends Component {
+class Checkout extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
@@ -46,7 +50,7 @@ export default class Checkout extends Component {
   }
 
   showCartProducts() {
-    const products = JSON.parse(localStorage.getItem('cart'));
+    const products = this.props.cart;
     const ZERO = 0;
     let sum = ZERO;
     return (
@@ -54,11 +58,11 @@ export default class Checkout extends Component {
         {products.map(({ title, thumbnail, price, quantity, id }) => {
           sum += price * quantity;
           return (
-            <div key={ id }>
-              <p>{title}</p>
-              <img src={ thumbnail } alt="thumb" />
-              <p>{price}</p>
-              <p>{quantity}</p>
+            <div className="div-content" key={id}>
+              <p className="p-title">{title}</p>
+              <img className="img-item" src={thumbnail} alt="thumb" />
+              <p className="p-price">{price}</p>
+              <p className="p-quantity">{quantity}</p>
             </div>
           );
         })}
@@ -91,19 +95,26 @@ export default class Checkout extends Component {
       <div>
         {this.showCartProducts()}
         <CheckoutForm
-          handleChange={ this.handleChange }
-          fullName={ fullName }
-          email={ email }
-          cpf={ cpf }
-          phoneNumber={ phoneNumber }
-          cep={ cep }
-          address={ address }
+          handleChange={this.handleChange}
+          fullName={fullName}
+          email={email}
+          cpf={cpf}
+          phoneNumber={phoneNumber}
+          cep={cep}
+          address={address}
         />
-        <button type="submit" disabled={ !isValid } onClick={ this.redirectHandle }>
+        <button className="defaultButton" type="submit" disabled={!isValid} onClick={this.redirectHandle}>
           Finalizar Compra
         </button>
         {redirect && <Redirect to="./" />}
+        {redirect && alert('Obrigado por testar o projeto :D')}
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ CartItems: { cart } }) => ({
+  cart,
+});
+
+export default connect(mapStateToProps)(Checkout);

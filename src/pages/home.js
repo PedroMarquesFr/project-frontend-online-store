@@ -22,7 +22,6 @@ class Home extends Component {
     this.state = {
       searchKey: '',
       category: '',
-      total: 0,
     };
   }
 
@@ -61,8 +60,8 @@ class Home extends Component {
   }
 
   render() {
-    const { category, searchKey, total } = this.state;
-    const isEmpty = 0;
+    const { category, searchKey} = this.state;
+    const {cart} = this.props;
     return (
       <div>
         <header>
@@ -84,7 +83,7 @@ class Home extends Component {
           <Link to="/cart" data-testid="shopping-cart-button">
             <BiCart className="icon-cart" />
             <div className="div-number-cart">
-              {total !== isEmpty && <div data-testid="shopping-cart-size">{total}</div>}
+              <div data-testid="shopping-cart-size">{cart.length}</div>
             </div>
           </Link>
         </header>
@@ -104,6 +103,10 @@ class Home extends Component {
   }
 }
 
+const mapStateToProps = ({ CartItems: { cart } }) => ({
+  cart
+});
+
 const mapDispatchToProps = { handleAsync };
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
