@@ -1,0 +1,10 @@
+.div-content {
+  display: flex;
+}
+p,
+h1 {
+  font-size: 32px;
+}
+button.button-car {
+  font-size: 26px;
+}

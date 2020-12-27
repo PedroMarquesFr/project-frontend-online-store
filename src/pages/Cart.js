@@ -39,6 +39,7 @@ class Cart extends Component {
             onClick={() => {
               this.setState({ redirect: true });
             }}
+            className="defaultButton"
           >
             Finalizar compras
           </button>

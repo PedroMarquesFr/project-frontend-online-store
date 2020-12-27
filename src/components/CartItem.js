@@ -23,6 +23,7 @@ class CartItem extends Component {
           type="button"
           data-testid="product-decrease-quantity"
           onClick={ ()=>editProduct(id,false) }
+          className="button-cart defaultButton"
         >
           -
         </button>
@@ -31,6 +32,7 @@ class CartItem extends Component {
           type="button"
           data-testid="product-increase-quantity"
           onClick={ ()=>editProduct(id,true) }
+          className="button-cart defaultButton"
         >
           +
         </button>
@@ -38,6 +40,7 @@ class CartItem extends Component {
           type="button"
           data-testid="product-remove"
           onClick={ ()=>removeProduct(id) }
+          className="button-cart defaultButton"
         >
           ×
         </button>

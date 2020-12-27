@@ -4,10 +4,10 @@ import { BiCart } from 'react-icons/bi';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { addProduct } from '../store/ducks/CartItems/actions';
 
 import Rating from '../components/Rating';
 import DetailsForm from '../components/DetailsForm';
-import addToCart from '../services/addToCart';
 import updateCartTotalinLocalStorage from '../services/updateCartTotal';
 
 class Details extends Component {
@@ -51,8 +51,14 @@ class Details extends Component {
   }
 
   addToCart() {
-    const { product } = this.state;
-    addToCart(product);
+    const { match } = this.props;
+    const { params } = match;
+    const { id } = params;
+    const { addProduct, products } = this.props;
+    const { title, price, availableQuantity, quantity, thumbnail } = products.find(
+      (product) => product.id === id,
+    );
+    addProduct({ id, title, price, availableQuantity, quantity, thumbnail });
   }
 
   updateCartTotal() {
@@ -103,6 +109,7 @@ class Details extends Component {
             type="button"
             data-testid="product-detail-add-to-cart"
             onClick={this.addToCart}
+            className="defaultButton"
           >
             Adicionar ao carrinho
           </button>
@@ -126,7 +133,9 @@ const mapStateToProps = ({ APIRequest: { products, error } }) => ({
   error,
 });
 
-export default connect(mapStateToProps)(Details);
+const mapDispatchToProps = { addProduct };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Details);
 
 Details.propTypes = {
   match: PropTypes.shape({
