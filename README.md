@@ -3,7 +3,7 @@
 ### Esse foi o resultado final do projeto:
 ![Site Home image](https://i.imgur.com/YAW6yIr.png "Home image")
 
-### O texto abaixo de trata das intruções do projeto:
+### O texto abaixo se trata das intruções do projeto:
 
 Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir deste repositório, utilizando uma branch específica e um _Pull Request_ para colocar seus códigos.
 
