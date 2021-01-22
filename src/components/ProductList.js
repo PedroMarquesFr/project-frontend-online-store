@@ -9,9 +9,20 @@ import Product from './Product';
 
 class ProductList extends Component {
   render() {
-    const { results, isFetching, error, category, searchKey, updateCartTotal } = this.props;
-    if (error) { return <div>{error}</div>; }
-    if (isFetching) { return <div>Loading...</div>; }
+    const {
+      results,
+      isFetching,
+      error,
+      category,
+      searchKey,
+      updateCartTotal,
+    } = this.props;
+    if (error) {
+      return <div>{error}</div>;
+    }
+    if (isFetching) {
+      return <div>Loading...</div>;
+    }
     return (
       <div className="div-prod-list">
         {results.map(
@@ -37,6 +48,9 @@ class ProductList extends Component {
             />
           ),
         )}
+        <p data-testid="home-initial-message">
+          Digite algum termo de pesquisa ou escolha uma categoria.
+        </p>
       </div>
     );
   }
